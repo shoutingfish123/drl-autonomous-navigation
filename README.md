@@ -1,7 +1,6 @@
 # Autonomous Navigation & Obstacle Avoidance for Mobile Robots via DRL 
 **Status:** Active Research (Work in Progress)   
 
-![Gazebo](https://img.shields.io/badge/Gazebo-Simulation-blue)
 ![Python](https://img.shields.io/badge/Python-3.8-3776AB?logo=python&logoColor=white)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.13-FF6F00?logo=tensorflow&logoColor=white)
 
