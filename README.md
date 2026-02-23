@@ -38,22 +38,36 @@ This provides a compact and continuous representation of the robot’s environme
 
 ### Continuous Action Space
 The Actor network outputs:
-- Linear velocity \( v \)
-- Angular velocity \( \omega_z \)
-
+* Linear velocity ($v$)
+* Angular velocity ($\omega_z$)
 Both values are bounded to ensure physically stable control.
+
+### Network Architecture
+The DDPG agent utilizes an Actor-Critic framework utilizing standard feed-forward Multi-Layer Perceptrons (MLPs). 
+
+**1. Actor Network (Policy)**
+The Actor maps the 28-dimensional state observation directly to a deterministic 2-dimensional continuous action.
+* **Input:** 28-dim state vector
+* **Hidden Layers:** Three fully-connected Dense layers (512 units each) utilizing `ReLU` activation.
+* **Output:** Two parallel branches merged into a single vector:
+  * Linear velocity branch utilizing a `Sigmoid` activation to bound output between $[0, 1]$.
+  * Angular velocity branch utilizing a `Tanh` activation to bound output between $[-1, 1]$.
+
+**2. Critic Network (Q-Value Evaluator)**
+The Critic evaluates the current policy by calculating the Q-value of a given state-action pair.
+* **State Pathway:** 28-dim state input processed through a Dense `ReLU` layer (512 units).
+* **Action Pathway:** 2-dim action input processed through a linear Dense layer.
+* **Merged Pathway:** The state and action pathways are concatenated and passed through two additional Dense `ReLU` layers (512 units each).
+* **Output:** A single neuron with a `Linear` activation function representing the expected future reward $Q$.
 
 ### Bellman Value Update
 The Critic network is updated according to:
-\[
-y_i = r_i + \gamma Q'(s_{i+1}, \mu'(s_{i+1} | \theta_{\mu'}) | \theta_{Q'})
-\]
+$$y_i = r_i + \gamma Q'(s_{i+1}, \mu'(s_{i+1}|\theta^{\mu'})|\theta^{Q'})$$
 Where:
-- \( r_i \) = immediate reward  
-- \( \gamma \) = discount factor  
-- \( Q' \) = target critic network  
-- \( \mu' \) = target actor network  
-
+* $r_i$ = immediate reward
+* $\gamma$ = discount factor
+* $Q'$ = target critic network
+* $\mu'$ = target actor network
 
 ## Current State
 The DDPG network is currently in the training phase, wherein Turtlebot3 tries to reach a target location (pink ball in Figure 1 and 3) in each episode for a total of 1000 episodes. 
@@ -75,7 +89,7 @@ During sparse-reward baseline testing:
  <p align="center">
   <img src="assets/local_minima.gif" width="700">
   <br>
-  <em>Figure 3:Agent moving along the path of a circle: trapped in a local minima </em>
+  <em>Figure 3: Agent moving along the path of a circle: trapped in a local minima </em>
 </p>
 
 ## Plausible Solution
