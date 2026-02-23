@@ -12,7 +12,7 @@ This project implements the autonomous navigation behavior of a TurtleBot3 Waffl
 <p align="center">
   <img src="assets/training_process.png" width="700">
   <br>
-  <em>Figure 1: TurtleBot3 simulated in Gazebo with LiDAR mapping and dynamic target</em>
+  <em>Figure 1: TurtleBot3 simulated in Gazebo with LiDAR mapping and dynamic target (pink ball)</em>
 </p>
 
 Using Python with ROS and Gazebo, the deep reinforcement learning framework is developed to:
